@@ -3,38 +3,32 @@ export default function Gallery() {
     {
       title: 'Robotic Arm Control',
       desc: 'Press to trigger NVIDIA Jetson + OpenClaw robotic manipulation',
-      placeholder: '🤖',
-      color: 'from-blue-600/20 to-cyan-600/20',
+      src: '/gallery/usecase-robotic.jpg',
     },
     {
       title: 'Smart Home Trigger',
       desc: 'Battery-free button for Home Assistant scenes and automations',
-      placeholder: '🏠',
-      color: 'from-green-600/20 to-emerald-600/20',
+      src: '/gallery/usecase-smarthome.jpg',
     },
     {
       title: 'Industrial Data Logging',
       desc: 'One press logs a timestamped event on the factory floor',
-      placeholder: '🏭',
-      color: 'from-amber-600/20 to-orange-600/20',
+      src: '/gallery/usecase-industrial.jpg',
     },
     {
       title: 'Voice AI Assistant',
       desc: 'Physical trigger to start a voice pipeline — no wake word needed',
-      placeholder: '🗣️',
-      color: 'from-purple-600/20 to-violet-600/20',
+      src: '/gallery/usecase-voice.jpg',
     },
     {
       title: 'Emergency Alert',
       desc: 'Panic buttons and nurse calls with zero network dependency',
-      placeholder: '🚨',
-      color: 'from-red-600/20 to-rose-600/20',
+      src: '/gallery/usecase-alert.jpg',
     },
     {
       title: 'The Button',
       desc: 'Human energy harvesting — powered by your press, no batteries, ever',
-      placeholder: '⚡',
-      color: 'from-brand-600/20 to-yellow-600/20',
+      src: '/gallery/usecase-button.jpg',
     },
   ]
 
@@ -57,13 +51,13 @@ export default function Gallery() {
               key={img.title}
               className="fade-in group relative overflow-hidden rounded-2xl border border-white/5 hover:border-brand-600/30 transition-all"
             >
-              {/* Placeholder — replace with real images */}
-              <div
-                className={`aspect-[4/3] bg-gradient-to-br ${img.color} flex items-center justify-center`}
-              >
-                <span className="text-6xl group-hover:scale-110 transition-transform duration-300">
-                  {img.placeholder}
-                </span>
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={img.src}
+                  alt={img.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
               </div>
 
               {/* Overlay */}
