@@ -32,7 +32,7 @@ export default function Gallery() {
     },
     {
       title: 'The Button',
-      desc: 'Self-powered kinetic energy harvesting — no batteries, ever',
+      desc: 'Human energy harvesting — powered by your press, no batteries, ever',
       placeholder: '⚡',
       color: 'from-brand-600/20 to-yellow-600/20',
     },

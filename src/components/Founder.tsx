@@ -22,12 +22,12 @@ export default function Founder() {
 
           <blockquote className="text-muted leading-relaxed max-w-2xl mx-auto mb-8">
             &ldquo;I&rsquo;ve always dreamed of being an inventor. That dream led me to
-            spend 20+ years in hardware manufacturing, building kinetic energy-harvesting
+            spend 20+ years in hardware manufacturing, building human energy harvesting
             switches and earning multiple utility patents along the way. Prompt Button is
             the product I&rsquo;ve wanted to build my entire career &mdash; taking proven
-            self-powered technology and putting it directly in the hands of makers and
+            human-powered technology and putting it directly in the hands of makers and
             developers. No batteries to replace. No cloud to depend on. Just a physical
-            trigger that speaks BLE and lets your code do the rest.&rdquo;
+            trigger powered by you that speaks BLE and lets your code do the rest.&rdquo;
           </blockquote>
 
           {/* Stats */}

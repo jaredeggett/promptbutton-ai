@@ -34,15 +34,16 @@ export default function Hero() {
             </h1>
 
             <p className="text-lg text-muted leading-relaxed mb-8 max-w-xl">
-              A self-powered BLE 5.0 button that triggers AI prompts, automations, and
-              scripts with a physical press. No batteries, no hub, no cloud. Just open
-              BLE packets your code catches in real time.
+              A BLE 5.0 button that triggers AI prompts, automations, and scripts with
+              a physical press. The power source? <span className="text-brand-400 font-medium">You.</span> Your
+              press generates all the energy it needs. No batteries, no hub, no cloud.
+              Just open BLE packets your code catches in real time.
             </p>
 
             {/* Stats row */}
             <div className="flex flex-wrap gap-6 mb-10">
               {[
-                { value: '20+ yr', label: 'Battery-free life' },
+                { value: '20+ yr', label: 'Human-powered' },
                 { value: '~30m', label: 'BLE range' },
                 { value: '$19.99', label: 'Early bird' },
               ].map((s) => (

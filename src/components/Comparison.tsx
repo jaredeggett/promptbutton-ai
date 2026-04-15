@@ -1,13 +1,15 @@
 export default function Comparison() {
   const features = [
-    { label: 'Price', branded: '$35 + $99 hub', itag: '$2 \u2013 $5', esp32: '$5 + battery', pb: 'From $19.99' },
-    { label: 'Power Source', branded: 'CR2032 coin cell', itag: 'CR2032 coin cell', esp32: 'USB / LiPo', pb: 'Kinetic harvesting' },
-    { label: 'Battery Life', branded: '~18 months', itag: '3 \u2013 6 months', esp32: 'Days to weeks', pb: '20+ years' },
-    { label: 'Hub Required', branded: 'Yes ($99)', itag: 'No', esp32: 'No', pb: 'No' },
-    { label: 'Protocol', branded: 'Proprietary', itag: 'Undocumented', esp32: 'Custom', pb: 'Published open spec' },
-    { label: 'SDKs', branded: 'Vendor app only', itag: 'None', esp32: 'Write your own', pb: 'Python, C++, YAML, Node-RED' },
-    { label: 'Cloud Dependency', branded: 'Yes', itag: 'Varies', esp32: 'No', pb: 'No' },
-    { label: 'Edge AI Ready', branded: 'No', itag: 'No', esp32: 'Manual setup', pb: 'Jetson / OpenClaw SDK' },
+    { label: 'Price', flic: '$35 + $99 hub', streamdeck: '$150+', keyboard: '$5 – $15', pb: 'From $19.99' },
+    { label: 'Power Source', flic: 'CR2032 coin cell', streamdeck: 'USB wired', keyboard: 'CR2032 / AAA', pb: 'Human energy harvesting' },
+    { label: 'Battery Life', flic: '~18 months', streamdeck: 'N/A (wired)', keyboard: '3 – 12 months', pb: '20+ years (no battery)' },
+    { label: 'Portable', flic: 'Yes (needs hub nearby)', streamdeck: 'No (desk only)', keyboard: 'Yes', pb: 'Yes — stick anywhere' },
+    { label: 'Hub Required', flic: 'Yes ($99)', streamdeck: 'No (USB only)', keyboard: 'No', pb: 'No' },
+    { label: 'Protocol', flic: 'Proprietary', streamdeck: 'USB HID', keyboard: 'BLE HID (closed)', pb: 'Published open BLE spec' },
+    { label: 'SDKs', flic: 'Vendor app only', streamdeck: 'Stream Deck SDK', keyboard: 'None', pb: 'Python, C++, YAML, Node-RED' },
+    { label: 'OpenClaw / Jetson', flic: 'No', streamdeck: 'No', keyboard: 'No', pb: 'Built-in SDK support' },
+    { label: 'Cloud Dependency', flic: 'Yes (IFTTT)', streamdeck: 'No', keyboard: 'No', pb: 'No — fully local' },
+    { label: 'Edge AI Ready', flic: 'No', streamdeck: 'Macro only', keyboard: 'No', pb: 'Jetson / OpenClaw native' },
   ]
 
   return (
@@ -18,7 +20,8 @@ export default function Comparison() {
             How does Prompt Button stack up?
           </h2>
           <p className="text-muted max-w-2xl mx-auto">
-            We compared every option on the market. Here's the data.
+            We compared every trigger option on the market. Only one is human-powered,
+            open-protocol, and built for edge AI.
           </p>
         </div>
 
@@ -27,9 +30,9 @@ export default function Comparison() {
             <thead>
               <tr className="border-b border-white/10">
                 <th className="text-left py-3 px-4 text-sm font-medium text-muted">Feature</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-muted">Branded Button</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-muted">Generic iTag</th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-muted">ESP32 DIY</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted">Flic 2</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted">Stream Deck</th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted">BLE Keyboard</th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-brand-400">Prompt Button</th>
               </tr>
             </thead>
@@ -37,9 +40,9 @@ export default function Comparison() {
               {features.map((f, i) => (
                 <tr key={f.label} className={`border-b border-white/5 ${i % 2 === 0 ? '' : 'bg-white/[0.02]'}`}>
                   <td className="py-3 px-4 text-sm font-medium text-white">{f.label}</td>
-                  <td className="py-3 px-4 text-sm text-muted">{f.branded}</td>
-                  <td className="py-3 px-4 text-sm text-muted">{f.itag}</td>
-                  <td className="py-3 px-4 text-sm text-muted">{f.esp32}</td>
+                  <td className="py-3 px-4 text-sm text-muted">{f.flic}</td>
+                  <td className="py-3 px-4 text-sm text-muted">{f.streamdeck}</td>
+                  <td className="py-3 px-4 text-sm text-muted">{f.keyboard}</td>
                   <td className="py-3 px-4 text-sm text-brand-300 font-medium comparison-highlight rounded">{f.pb}</td>
                 </tr>
               ))}

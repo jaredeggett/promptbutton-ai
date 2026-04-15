@@ -4,25 +4,25 @@ export default function HowItWorks() {
       num: '01',
       icon: '\uD83D\uDC46',
       title: 'Press',
-      desc: 'You press the button. That mechanical force is all it needs.',
+      desc: 'You press the button. Congratulations — you just became a power plant.',
     },
     {
       num: '02',
       icon: '\u26A1',
       title: 'Harvest',
-      desc: 'A spring-loaded electromagnetic generator converts your press into electrical energy.',
+      desc: 'A spring-loaded electromagnetic generator steals a tiny bit of your human energy and converts it to electricity. You won\'t miss it.',
     },
     {
       num: '03',
       icon: '\uD83D\uDCE1',
       title: 'Broadcast',
-      desc: 'The harvested energy powers a BLE 5.0 radio that broadcasts an advertisement packet.',
+      desc: 'Your harvested energy powers a BLE 5.0 radio that broadcasts an advertisement packet. One press, one signal.',
     },
     {
       num: '04',
       icon: '\uD83D\uDCBB',
       title: 'Receive',
-      desc: 'Any BLE device within ~30m picks up the packet. Your code handles the rest.',
+      desc: 'Any BLE device within ~30m picks up the packet. Your code handles the rest. You can take the credit.',
     },
   ]
 
@@ -31,12 +31,12 @@ export default function HowItWorks() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 fade-in">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Kinetic energy in. BLE packets out.
+            Your energy in. BLE packets out.
           </h2>
           <p className="text-muted max-w-2xl mx-auto">
-            Built on proven kinetic switch technology with 20+ years and millions of
-            units deployed in commercial buildings worldwide. The same mechanism that
-            powers wireless light switches now triggers your AI.
+            Built on proven human energy harvesting technology with 20+ years and millions of
+            units deployed worldwide. Your finger does all the work — the same mechanism that
+            powers wireless light switches now triggers your AI. Finally, a device that runs on you.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ export default function HowItWorks() {
 
         {/* Flow diagram */}
         <div className="mt-12 flex items-center justify-center gap-3 flex-wrap text-sm fade-in">
-          {['Press', 'Kinetic', 'Electric', 'BLE 5.0 Broadcast', 'Your Code'].map(
+          {['Press', 'Human Energy', 'Electric', 'BLE 5.0 Broadcast', 'Your Code'].map(
             (label, i, arr) => (
               <span key={label} className="flex items-center gap-3">
                 <span className="px-3 py-1.5 bg-surface border border-white/10 rounded-lg text-muted font-medium">

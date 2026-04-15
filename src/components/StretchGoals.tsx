@@ -1,10 +1,10 @@
 export default function StretchGoals() {
   const goals = [
-    { amount: '$3,000', status: 'funded', title: 'Base Campaign', desc: 'Prompt Button hardware, open-source SDKs, published BLE spec. We ship.' },
+    { amount: '$3,000', status: 'funded', title: 'Base Campaign', desc: 'Human-powered Prompt Button hardware, open-source SDKs, published BLE spec. We ship.' },
     { amount: '$6,000', status: 'next', title: 'Double-Press Detection', desc: 'Firmware update adds double-press event type. Two distinct triggers from one button.' },
     { amount: '$10,000', status: 'locked', title: 'Multi-Button Dashboard', desc: 'Web-based dashboard for Pi and Jetson. Monitor all your buttons, view event logs, set up triggers visually.' },
     { amount: '$15,000', status: 'locked', title: 'ESP32 BLE-to-MQTT Bridge', desc: 'Flash an ESP32 and bridge Prompt Button events to any MQTT broker. Connect to Node-RED, AWS IoT, or your own stack.' },
-    { amount: '$25,000', status: 'locked', title: 'IP65 Outdoor-Rated Button', desc: 'Weather-sealed enclosure rated for outdoor deployment. Same kinetic mechanism, built for the elements.' },
+    { amount: '$25,000', status: 'locked', title: 'Mobile App + BLE Scanner', desc: 'Companion app for iOS and Android. Scan, configure, and test your Prompt Buttons. Assign actions directly from your phone.' },
     { amount: '$40,000', status: 'locked', title: 'Multi-Press & Long-Press', desc: 'Triple-press, long-press, and custom press patterns. Maximum flexibility from a single button.' },
   ]
 

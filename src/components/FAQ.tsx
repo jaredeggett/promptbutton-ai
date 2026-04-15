@@ -3,7 +3,7 @@ import { useState } from 'react'
 const faqs = [
   {
     q: 'How does it work without a battery?',
-    a: 'Each press compresses a spring-loaded electromagnetic generator inside the button. That mechanical energy is converted into enough electrical energy to power a BLE 5.0 radio and broadcast a single advertisement packet. This is the same proven kinetic energy-harvesting technology that has powered millions of commercial wireless light switches worldwide for over 20 years. The mechanism is rated for 500,000+ presses.',
+    a: 'You are the battery. Each press compresses a spring-loaded electromagnetic generator inside the button, converting your human energy into enough electricity to power a BLE 5.0 radio and broadcast an advertisement packet. Think of it as a very tiny gym workout that actually does something useful. This is the same proven human energy harvesting technology that has powered millions of commercial wireless light switches worldwide for over 20 years. The mechanism is rated for 500,000+ presses — so press away.',
   },
   {
     q: 'What devices can receive the signal?',
@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: 'When does it ship?',
-    a: 'We are targeting Q3 2026 for initial shipments. The kinetic switch mechanism is proven manufacturing with over 20 years of production history. The BLE radio design is finalized. We are currently in tooling and certification. Backers will receive regular production updates throughout the campaign.',
+    a: 'We are targeting Q3 2026 for initial shipments. The human energy harvesting mechanism is proven manufacturing with over 20 years of production history. The BLE radio design is finalized. We are currently in tooling and certification. Backers will receive regular production updates throughout the campaign.',
   },
   {
     q: 'Can I use multiple buttons?',

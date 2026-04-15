@@ -8,7 +8,7 @@ export default function Pricing() {
       limit: 'Limited to 25 backers',
       perUnit: null,
       items: [
-        'Self-powered Prompt Button',
+        'Human-powered Prompt Button',
         'Peel-and-stick mount',
         'Open-source SDK access',
         'Published BLE spec',
@@ -23,7 +23,7 @@ export default function Pricing() {
       limit: null,
       perUnit: null,
       items: [
-        'Self-powered Prompt Button',
+        'Human-powered Prompt Button',
         'Peel-and-stick mount',
         'Open-source SDK access',
         'Published BLE spec',
@@ -38,7 +38,7 @@ export default function Pricing() {
       limit: null,
       perUnit: '$21.66 each',
       items: [
-        '3x Self-powered Prompt Buttons',
+        '3x Human-powered Prompt Buttons',
         '3x Peel-and-stick mounts',
         'Open-source SDK access',
         'Published BLE spec',
@@ -53,7 +53,7 @@ export default function Pricing() {
       limit: null,
       perUnit: '$20.00 each',
       items: [
-        '10x Self-powered Prompt Buttons',
+        '10x Human-powered Prompt Buttons',
         '10x Peel-and-stick mounts',
         'Open-source SDK access',
         'Priority support channel',
@@ -68,7 +68,7 @@ export default function Pricing() {
       limit: null,
       perUnit: '$18.00 each',
       items: [
-        '25x Self-powered Prompt Buttons',
+        '25x Human-powered Prompt Buttons',
         '25x Peel-and-stick mounts',
         'Open-source SDK access',
         'Priority support channel',
@@ -83,7 +83,7 @@ export default function Pricing() {
       limit: null,
       perUnit: '$16.00 each',
       items: [
-        '50x Self-powered Prompt Buttons',
+        '50x Human-powered Prompt Buttons',
         '50x Peel-and-stick mounts',
         'OEM branding discussion',
         'Direct engineering support',

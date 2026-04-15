@@ -1,9 +1,9 @@
 export default function Features() {
   const features = [
     {
-      icon: '\u26A1',
-      title: 'Zero Batteries',
-      desc: 'Kinetic energy harvesting. Press = power. 20+ year lifespan, zero maintenance.',
+      icon: '\uD83E\uDDBE',
+      title: 'Powered by You',
+      desc: 'Human energy harvesting. You press it, it runs. No batteries — just your sheer human determination.',
     },
     {
       icon: '\uD83D\uDD10',
