@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a2e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E65100;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Grid pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <!-- Glow -->
+  <circle cx="600" cy="300" r="250" fill="rgba(255,152,0,0.08)" filter="blur(80px)"/>
+  <!-- Logo -->
+  <rect x="520" y="120" width="70" height="70" rx="16" fill="url(#orange)"/>
+  <text x="555" y="167" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="32" fill="white" text-anchor="middle">PB</text>
+  <!-- Brand name -->
+  <text x="600" y="250" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="52" fill="white" text-anchor="middle">
+    Prompt<tspan fill="#FF9800">Button</tspan>
+  </text>
+  <!-- Tagline -->
+  <text x="600" y="310" font-family="Inter,system-ui,sans-serif" font-weight="600" font-size="28" fill="rgba(255,255,255,0.7)" text-anchor="middle">Press a button. Run your AI.</text>
+  <!-- Subtitle -->
+  <text x="600" y="370" font-family="Inter,system-ui,sans-serif" font-weight="400" font-size="18" fill="rgba(255,255,255,0.4)" text-anchor="middle">Self-powered BLE 5.0 trigger for AI workflows. No batteries. No hub. No cloud.</text>
+  <!-- Stats -->
+  <text x="330" y="460" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="28" fill="white" text-anchor="middle">20+ yr</text>
+  <text x="330" y="488" font-family="Inter,system-ui,sans-serif" font-weight="400" font-size="14" fill="rgba(255,255,255,0.4)" text-anchor="middle">Battery-free life</text>
+  <text x="600" y="460" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="28" fill="white" text-anchor="middle">~30m</text>
+  <text x="600" y="488" font-family="Inter,system-ui,sans-serif" font-weight="400" font-size="14" fill="rgba(255,255,255,0.4)" text-anchor="middle">BLE range</text>
+  <text x="870" y="460" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="28" fill="white" text-anchor="middle">$19.99</text>
+  <text x="870" y="488" font-family="Inter,system-ui,sans-serif" font-weight="400" font-size="14" fill="rgba(255,255,255,0.4)" text-anchor="middle">Early bird</text>
+  <!-- Bottom bar -->
+  <rect x="0" y="580" width="1200" height="50" fill="rgba(255,152,0,0.1)"/>
+  <text x="600" y="612" font-family="Inter,system-ui,sans-serif" font-weight="500" font-size="16" fill="#FF9800" text-anchor="middle">promptbutton.ai • Live on Kickstarter</text>
+</svg>

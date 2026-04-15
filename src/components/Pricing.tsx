@@ -2,8 +2,9 @@ export default function Pricing() {
   const tiers = [
     {
       name: 'Super Early Bird',
-      price: '$14.99',
+      price: '$19.99',
       qty: '1 button',
+      retail: '$29.99',
       limit: 'Limited to 25 backers',
       perUnit: null,
       items: [
@@ -16,8 +17,9 @@ export default function Pricing() {
     },
     {
       name: 'Dev Kit',
-      price: '$19.99',
+      price: '$24.99',
       qty: '1 button',
+      retail: '$29.99',
       limit: null,
       perUnit: null,
       items: [
@@ -30,10 +32,11 @@ export default function Pricing() {
     },
     {
       name: 'Maker Pack',
-      price: '$49.99',
+      price: '$64.99',
       qty: '3 buttons',
+      retail: '$89.97',
       limit: null,
-      perUnit: '$16.66 each',
+      perUnit: '$21.66 each',
       items: [
         '3x Self-powered Prompt Buttons',
         '3x Peel-and-stick mounts',
@@ -44,10 +47,11 @@ export default function Pricing() {
     },
     {
       name: 'Lab Pack',
-      price: '$129.99',
+      price: '$199.99',
       qty: '10 buttons',
+      retail: '$299.90',
       limit: null,
-      perUnit: '$13.00 each',
+      perUnit: '$20.00 each',
       items: [
         '10x Self-powered Prompt Buttons',
         '10x Peel-and-stick mounts',
@@ -58,10 +62,11 @@ export default function Pricing() {
     },
     {
       name: 'Fleet Pack',
-      price: '$249.99',
+      price: '$449.99',
       qty: '25 buttons',
+      retail: '$749.75',
       limit: null,
-      perUnit: '$10.00 each',
+      perUnit: '$18.00 each',
       items: [
         '25x Self-powered Prompt Buttons',
         '25x Peel-and-stick mounts',
@@ -72,10 +77,11 @@ export default function Pricing() {
     },
     {
       name: 'OEM Pack',
-      price: '$499.99',
+      price: '$799.99',
       qty: '50 buttons',
+      retail: '$1,499.50',
       limit: null,
-      perUnit: '$10.00 each',
+      perUnit: '$16.00 each',
       items: [
         '50x Self-powered Prompt Buttons',
         '50x Peel-and-stick mounts',
@@ -124,6 +130,12 @@ export default function Pricing() {
                   <span className="text-3xl font-bold text-white">{t.price}</span>
                   <span className="text-sm text-muted">{t.qty}</span>
                 </div>
+                {t.retail && (
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-xs text-muted line-through">{t.retail} retail</span>
+                    <span className="text-xs text-green-400 font-medium">Save {Math.round((1 - parseFloat(t.price.replace('$','').replace(',','')) / parseFloat(t.retail.replace('$','').replace(',',''))) * 100)}%</span>
+                  </div>
+                )}
                 {t.perUnit && (
                   <span className="text-xs text-brand-400">{t.perUnit}</span>
                 )}

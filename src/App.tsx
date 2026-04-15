@@ -4,6 +4,7 @@ import Hero from './components/Hero'
 import Features from './components/Features'
 import HowItWorks from './components/HowItWorks'
 import UseCases from './components/UseCases'
+import Gallery from './components/Gallery'
 import Integrations from './components/Integrations'
 import Pricing from './components/Pricing'
 import Comparison from './components/Comparison'
@@ -37,6 +38,7 @@ function App() {
       <Features />
       <HowItWorks />
       <UseCases />
+      <Gallery />
       <Integrations />
       <Pricing />
       <Comparison />

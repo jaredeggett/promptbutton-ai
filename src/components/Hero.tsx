@@ -44,7 +44,7 @@ export default function Hero() {
               {[
                 { value: '20+ yr', label: 'Battery-free life' },
                 { value: '~30m', label: 'BLE range' },
-                { value: '$14.99', label: 'Early bird' },
+                { value: '$19.99', label: 'Early bird' },
               ].map((s) => (
                 <div key={s.label}>
                   <div className="text-2xl font-bold text-white">{s.value}</div>

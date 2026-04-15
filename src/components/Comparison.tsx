@@ -1,6 +1,6 @@
 export default function Comparison() {
   const features = [
-    { label: 'Price', branded: '$35 + $99 hub', itag: '$2 \u2013 $5', esp32: '$5 + battery', pb: 'From $14.99' },
+    { label: 'Price', branded: '$35 + $99 hub', itag: '$2 \u2013 $5', esp32: '$5 + battery', pb: 'From $19.99' },
     { label: 'Power Source', branded: 'CR2032 coin cell', itag: 'CR2032 coin cell', esp32: 'USB / LiPo', pb: 'Kinetic harvesting' },
     { label: 'Battery Life', branded: '~18 months', itag: '3 \u2013 6 months', esp32: 'Days to weeks', pb: '20+ years' },
     { label: 'Hub Required', branded: 'Yes ($99)', itag: 'No', esp32: 'No', pb: 'No' },
