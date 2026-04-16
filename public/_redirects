@@ -1,3 +1,2 @@
-# Cloudflare Pages redirects
-# These handle SPA routing — all paths serve index.html
-/* /index.html 200
+# Static site — no SPA catch-all needed
+# Cloudflare Pages serves files from dist/ directly
