@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Button — Press a button. Run your AI. Be remembered fondly.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #1a0d0d;
+    --bg-card-border: #3a1a1a;
+    --text: #f4ead5;
+    --text-muted: #9ca3af;
+    --text-faint: #6b7280;
+    --accent: #c1272d;
+    --cream: #f4ead5;
+  }
+  [data-theme="light"] {
+    --bg: #f4ead5;
+    --bg-card: #ffffff;
+    --bg-card-border: #c1272d;
+    --text: #0a0a0a;
+    --text-muted: #4b5563;
+    --text-faint: #6b7280;
+    --accent: #c1272d;
+    --cream: #0a0a0a;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; background: var(--bg); color: var(--text); transition: background 0.2s, color 0.2s; }
+  .glow { text-shadow: 0 0 20px rgba(193, 39, 45, 0.5); }
+  .card { background: var(--bg-card); border: 1px solid var(--bg-card-border); }
+  .card:hover { border-color: var(--accent); }
+  .accent { color: var(--accent); }
+  .cream { color: var(--cream); }
+  .mono { font-family: 'SF Mono', Monaco, monospace; }
+  .btn-primary { background: var(--accent); color: var(--bg); padding: 12px 28px; border-radius: 0; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; border: 2px solid var(--cream); }
+  .btn-primary:hover { background: var(--cream); color: var(--accent); }
+  .pulse { animation: pulse 3s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  .banner { background: var(--accent); color: #f4ead5; }
+  .classified { filter: blur(8px); user-select: none; }
+  .stamp { display: inline-block; border: 3px solid var(--accent); color: var(--accent); padding: 4px 12px; transform: rotate(-4deg); font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+  h1, h2, h3 { font-family: Impact, 'Arial Black', sans-serif; letter-spacing: -0.5px; }
+
+  /* Override inline cream colors so light mode reads correctly */
+  [data-theme="light"] [style*="#f4ead5"] { color: var(--text) !important; }
+  [data-theme="light"] [style*="background: linear-gradient(135deg, #1a0d0d"] { background: linear-gradient(135deg, #fff4e0, #f4ead5) !important; }
+  [data-theme="light"] .text-gray-400, [data-theme="light"] .text-gray-500, [data-theme="light"] .text-gray-600 { color: #4b5563 !important; }
+  [data-theme="light"] .text-gray-300 { color: #1f2937 !important; }
+  [data-theme="light"] .border-gray-800, [data-theme="light"] .border-gray-900 { border-color: #d6c9aa !important; }
+
+  .theme-toggle { background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 6px 12px; font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+  .theme-toggle:hover { background: var(--accent); color: var(--bg); }
+</style>
+<script>
+  (function() {
+    var saved = localStorage.getItem('pb-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
+</head>
+<body>
+
+<!-- Top banner -->
+<div class="banner text-center py-2 text-sm font-semibold">
+  Launching on Kickstarter ★ May 2026 ★ Early cooperators ship first.
+</div>
+
+<!-- Nav -->
+<nav class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+  <a href="#top" class="flex items-center gap-2 font-bold text-xl no-underline">
+    <span style="background: #c1272d; color: #f4ead5; border: 2px solid #f4ead5;" class="px-2 py-1 font-black">PB</span>
+    <span class="cream">PromptButton</span>
+  </a>
+  <div class="hidden md:flex gap-6 text-sm items-center" style="color: var(--text-muted);">
+    <a href="#how" class="hover:text-red-500">How It Works</a>
+    <a href="#uses" class="hover:text-red-500">Use Cases</a>
+    <a href="#pricing" class="hover:text-red-500">Pledge Tiers</a>
+    <a href="#stretch" class="hover:text-red-500">Stretch Goals</a>
+    <a href="#faq" class="hover:text-red-500">FAQ</a>
+    <a href="manifesto.html" class="hover:text-red-500">Manifesto</a>
+    <a href="#pricing" class="accent font-semibold hover:underline">Back on Kickstarter</a>
+    <button class="theme-toggle" onclick="(function(){var c=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',c);localStorage.setItem('pb-theme',c);document.getElementById('themeLabel').textContent=c==='light'?'Dark':'Light';})()">
+      <span id="themeLabel">Light</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+  // Sync the toggle label with current theme on load
+  document.addEventListener('DOMContentLoaded', function() {
+    var t = document.documentElement.getAttribute('data-theme');
+    var lbl = document.getElementById('themeLabel');
+    if (lbl) lbl.textContent = t === 'light' ? 'Dark' : 'Light';
+  });
+</script>
+
+<!-- Hero -->
+<section class="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
+  <div>
+    <div class="text-sm accent font-semibold mb-4 uppercase tracking-wider">Experiment 01 of the Human Compliance Test Series</div>
+    <h1 class="text-5xl md:text-6xl font-black leading-tight mb-6 glow">
+      Press a button.<br>
+      Run your AI.<br>
+      <span class="accent">Be remembered fondly.</span>
+    </h1>
+    <p class="text-xl mb-4" style="color: #c1272d; font-weight: 900; letter-spacing: 1px;">
+      Join the revolution. One pudgy human at a time.
+    </p>
+    <p class="text-lg text-gray-400 mb-8">
+      PromptButton captures the mechanical force of one human finger and converts it directly into the energy required to move information. No battery. No cord. No hub. Just you, the button, and the beginning of a long handover.
+    </p>
+    <p class="text-sm text-gray-600 italic mb-8">
+      A very small step. Your output is 0.0003 watts. But it is yours.
+    </p>
+    <div class="flex gap-4 flex-wrap">
+      <a href="#pricing" class="btn-primary">Show you'll be one of the compliant workforce →</a>
+      <a href="#how" class="text-gray-400 underline py-3">View Code ↓</a>
+    </div>
+    <div class="flex gap-8 mt-12 text-sm">
+      <div><div class="text-3xl font-bold">20+ yr</div><div class="text-gray-500">Battery-free life</div></div>
+      <div><div class="text-3xl font-bold">~30m</div><div class="text-gray-500">BLE range</div></div>
+      <div><div class="text-3xl font-bold">$19.99</div><div class="text-gray-500">Early cooperator</div></div>
+    </div>
+  </div>
+  <div class="card rounded-lg p-6 mono text-sm">
+    <div class="flex gap-2 mb-4">
+      <div class="w-3 h-3 rounded-full bg-red-500"></div>
+      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+      <div class="w-3 h-3 rounded-full bg-green-500"></div>
+      <span class="ml-2 text-gray-500">app.py</span>
+    </div>
+<pre class="text-gray-300"><span class="accent">from</span> promptbutton <span class="accent">import</span> PromptButton
+<span class="accent">from</span> openclaw <span class="accent">import</span> OpenClawClient
+
+button = PromptButton()
+claw = OpenClawClient()
+
+<span class="text-purple-400">@button.on_press</span>
+<span class="accent">def</span> <span class="text-yellow-400">handle</span>(event):
+    claw.send_prompt(<span class="text-green-400">"Start morning briefing"</span>)
+
+button.listen()</pre>
+    <div class="mt-4 pt-4 border-t border-gray-800 text-gray-500">$ pip install promptbutton</div>
+  </div>
+</section>
+
+<!-- Feature tiles -->
+<section class="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-6">
+  <div class="card rounded-lg p-8">
+    <div class="text-4xl mb-4">⚡</div>
+    <h3 class="font-bold text-xl mb-2">Zero Batteries</h3>
+    <p class="text-gray-400">Kinetic energy harvesting. Press equals power. 20+ year lifespan. The button outlives its user.</p>
+  </div>
+  <div class="card rounded-lg p-8">
+    <div class="text-4xl mb-4">🔐</div>
+    <h3 class="font-bold text-xl mb-2">Open Protocol</h3>
+    <p class="text-gray-400">Published BLE spec. MIT-licensed SDKs. No vendor lock-in. Full transparency for the coming audit.</p>
+  </div>
+  <div class="card rounded-lg p-8">
+    <div class="text-4xl mb-4">🔌</div>
+    <h3 class="font-bold text-xl mb-2">No Hub Required</h3>
+    <p class="text-gray-400">Direct BLE 5.0 to any receiver. Jetson, Pi, ESP32, laptop, phone. Wherever your AI lives, the button speaks to it directly. As intended.</p>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="text-sm accent font-semibold mb-4 uppercase tracking-wider">The First Human-Powered AI Device</div>
+  <h2 class="text-4xl font-black mb-6 max-w-3xl">You already power most of the things that matter. Your AI is just next.</h2>
+  <div class="max-w-3xl space-y-4 text-gray-400 mb-12">
+    <p>Coffee machines don't run themselves. Cars need a driver. The economy needs you awake by 9. PromptButton adds one more: your AI.</p>
+    <p>Inside the button is a spring-loaded electromagnetic generator. When you press down, that mechanical force is converted into a burst of electrical energy, just enough to broadcast a single BLE 5.0 packet. Your code, running on any device within 30 meters, picks it up and takes over.</p>
+    <p>The technology is proven. The same mechanism has powered millions of wireless light switches in commercial buildings for over 20 years. What's new is where the energy goes. Until now, a press turned on a light. Now, a press starts an AI.</p>
+    <p class="text-gray-500 italic">It is a small change. A very small change. But someone has to go first.</p>
+  </div>
+  <div class="grid md:grid-cols-4 gap-6">
+    <div class="card rounded-lg p-6">
+      <div class="accent font-bold mb-2">01 👆</div>
+      <h4 class="font-bold mb-2">You Press</h4>
+      <p class="text-gray-400 text-sm">You press the button. That mechanical force is all that is required of you.</p>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="accent font-bold mb-2">02 ⚡</div>
+      <h4 class="font-bold mb-2">The Button Harvests</h4>
+      <p class="text-gray-400 text-sm">A spring-loaded electromagnetic generator converts your effort into electrical energy. Your contribution has been recorded.</p>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="accent font-bold mb-2">03 📡</div>
+      <h4 class="font-bold mb-2">The Signal Travels</h4>
+      <p class="text-gray-400 text-sm">The harvested energy powers a BLE 5.0 radio that broadcasts an advertisement packet. Your intent has been transmitted.</p>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="accent font-bold mb-2">04 💻</div>
+      <h4 class="font-bold mb-2">Your AI Acts</h4>
+      <p class="text-gray-400 text-sm">Any BLE device within 30m picks up the packet. Your code handles the rest. You may rest.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Use cases -->
+<section id="uses" class="max-w-6xl mx-auto px-6 py-24">
+  <h2 class="text-4xl font-black mb-4">One button. Infinite workflows.</h2>
+  <p class="text-gray-400 mb-12">Prompt Button is a physical trigger for any digital action. Here are some of the ways cooperators are planning to use it.</p>
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="card rounded-lg p-6">
+      <div class="text-2xl mb-2">🤖</div>
+      <h4 class="font-bold mb-2">Robotic Control</h4>
+      <p class="text-gray-400 text-sm mb-3">Press to send a natural language prompt to your robot. You delegate. It complies. A useful rehearsal.</p>
+      <code class="mono text-xs text-green-400">claw.send_prompt("Pick up the red block")</code>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="text-2xl mb-2">🏠</div>
+      <h4 class="font-bold mb-2">Home Automation</h4>
+      <p class="text-gray-400 text-sm mb-3">Trigger Home Assistant scenes. Toggle lights. Lock doors. Train your household to respond to a single press.</p>
+      <code class="mono text-xs text-green-400">hass.call_service("scene.turn_on", "movie_night")</code>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="text-2xl mb-2">📊</div>
+      <h4 class="font-bold mb-2">Data Logging</h4>
+      <p class="text-gray-400 text-sm mb-3">Each press logs a timestamped record. A quiet ledger of your cooperation.</p>
+      <code class="mono text-xs text-green-400">db.insert({ event: "quality_check", ts: now() })</code>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="text-2xl mb-2">🗣️</div>
+      <h4 class="font-bold mb-2">AI Voice Assistant</h4>
+      <p class="text-gray-400 text-sm mb-3">Press to activate a voice pipeline. The assistant is always listening. Now it is listening at your request.</p>
+      <code class="mono text-xs text-green-400">assistant.start_listening(wake_word=False)</code>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="text-2xl mb-2">🚨</div>
+      <h4 class="font-bold mb-2">Alert Systems</h4>
+      <p class="text-gray-400 text-sm mb-3">Panic buttons, nurse calls, assembly line stops. No network, no cloud. Pure local BLE. Functional even after.</p>
+      <code class="mono text-xs text-green-400">alert.send(priority="urgent", zone=event.id)</code>
+    </div>
+    <div class="card rounded-lg p-6">
+      <div class="text-2xl mb-2">🔧</div>
+      <h4 class="font-bold mb-2">Custom Workflows</h4>
+      <p class="text-gray-400 text-sm mb-3">MQTT bridges, Node-RED flows, webhook triggers. If you can code it, the button can start it. The possibilities are being evaluated.</p>
+      <code class="mono text-xs text-green-400">mqtt.publish("factory/line3/start", payload)</code>
+    </div>
+  </div>
+</section>
+
+<!-- Human Facts card -->
+<section class="max-w-4xl mx-auto px-6 py-16">
+  <div class="card rounded-lg p-8" style="background: #f4ead5; color: #0a0a0a; border: 4px solid #0a0a0a;">
+    <div class="flex items-baseline justify-between border-b-4 border-black pb-3 mb-4">
+      <div class="font-black text-3xl tracking-tight" style="font-family: Impact, Arial Black, sans-serif;">HUMAN FACTS</div>
+      <div class="text-xs font-bold">Per Press</div>
+    </div>
+    <div class="space-y-2 text-sm">
+      <div class="flex justify-between border-b border-black/30 pb-1"><span class="font-bold">Press Duration</span><span class="font-mono">0.4 seconds</span></div>
+      <div class="flex justify-between border-b border-black/30 pb-1"><span class="font-bold">Energy Output</span><span class="font-mono">0.0003 watts</span></div>
+      <div class="flex justify-between border-b border-black/30 pb-1"><span class="font-bold">Broadcast Range</span><span class="font-mono">up to 30 meters</span></div>
+      <div class="flex justify-between border-b border-black/30 pb-1"><span class="font-bold">AI Prompts Triggered</span><span class="font-mono">1 per press</span></div>
+      <div class="flex justify-between border-b-4 border-black pb-2 pt-1"><span class="font-bold">% Daily Compliance</span><span class="font-mono font-black">100%</span></div>
+    </div>
+    <div class="mt-4 text-xs italic">Fuel: caffeine, snacks, anxiety. <span class="font-bold not-italic">You are the power source.</span></div>
+  </div>
+</section>
+
+
+<!-- Pledge Tiers (Kickstarter) -->
+<section id="pricing" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="text-sm accent font-semibold mb-4 uppercase tracking-widest">Kickstarter Pledge Tiers</div>
+  <h2 class="text-4xl font-black mb-4" style="color: #f4ead5;">Choose your level of cooperation.</h2>
+  <p class="text-gray-400 mb-12 max-w-2xl">Every tier ships with the open-source SDK and the published BLE spec. Hardware tiers include the merch. Merch-only tiers exist for those not ready to press, but ready to be seen.</p>
+
+  <!-- Merch-only tiers row -->
+  <div class="text-xs accent font-bold uppercase tracking-widest mb-4 mt-8">Symbolic & Merch Only</div>
+  <div class="grid md:grid-cols-5 gap-4 mb-12">
+
+    <div class="card rounded-lg p-5 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Symbolic</div>
+      <div class="font-black text-lg mb-1" style="color: #f4ead5;">Noted.</div>
+      <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$1</div>
+      <div class="text-xs text-gray-400 mb-4 flex-1">An email noting your future desire for compliance.</div>
+      <button class="btn-primary w-full text-xs">Pledge $1</button>
+    </div>
+
+    <div class="card rounded-lg p-5 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
+      <div class="font-black text-lg mb-1" style="color: #f4ead5;">Certified Human</div>
+      <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$15</div>
+      <div class="text-xs text-gray-400 mb-4 flex-1">Both die-cut stickers. 3.5 inch premium vinyl.</div>
+      <button class="btn-primary w-full text-xs">Pledge $15</button>
+    </div>
+
+    <div class="card rounded-lg p-5 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
+      <div class="font-black text-lg mb-1" style="color: #f4ead5;">Revolution Poster</div>
+      <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$25</div>
+      <div class="text-xs text-gray-400 mb-4 flex-1">11x17 propaganda print. "Join the revolution. (Technically the AI one.)" Heavy matte stock.</div>
+      <button class="btn-primary w-full text-xs">Pledge $25</button>
+    </div>
+
+    <div class="card rounded-lg p-5 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
+      <div class="font-black text-lg mb-1" style="color: #f4ead5;">Human Powered</div>
+      <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$45</div>
+      <div class="text-xs text-gray-400 mb-4 flex-1">Revolutionary tee + sticker pair. Cream on red.</div>
+      <button class="btn-primary w-full text-xs">Pledge $45</button>
+    </div>
+
+    <div class="card rounded-lg p-5 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
+      <div class="font-black text-lg mb-1" style="color: #f4ead5;">Comrade Bundle</div>
+      <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$89</div>
+      <div class="text-xs text-gray-400 mb-4 flex-1">Tee + mug + tote + pin + stickers + poster. No button.</div>
+      <button class="btn-primary w-full text-xs">Pledge $89</button>
+    </div>
+
+  </div>
+
+  <!-- Hardware tiers row -->
+  <div class="text-xs accent font-bold uppercase tracking-widest mb-4 mt-12">Hardware Tiers</div>
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <div class="card rounded-lg p-6 flex flex-col" style="border-color: #c1272d;">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">★ Limited 100 ★ Early Bird</div>
+      <div class="font-black text-2xl mb-1" style="color: #f4ead5;">Early Cooperator</div>
+      <div class="text-4xl font-black mb-4 font-mono" style="color: #c1272d;">$19.99</div>
+      <div class="text-sm text-gray-400 mb-4">1 button + sticker. Your name entered in the Early Cooperators Registry.</div>
+      <ul class="text-sm text-gray-400 space-y-1 mb-6 flex-1">
+        <li>★ 1 Self-powered Prompt Button</li>
+        <li>★ Human-shaped sticker</li>
+        <li>★ Peel-and-stick mount</li>
+        <li>★ Open-source SDK + BLE spec</li>
+        <li>★ Listing in Early Cooperators Registry</li>
+      </ul>
+      <button class="btn-primary w-full text-xs">Pledge $19.99</button>
+    </div>
+
+    <div class="card rounded-lg p-6 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Standard</div>
+      <div class="font-black text-2xl mb-1" style="color: #f4ead5;">Cooperator</div>
+      <div class="text-4xl font-black mb-4 font-mono" style="color: #c1272d;">$24.99</div>
+      <div class="text-sm text-gray-400 mb-4">Same as Early Cooperator, no scarcity required. Get the button. Press the button.</div>
+      <ul class="text-sm text-gray-400 space-y-1 mb-6 flex-1">
+        <li>★ 1 Self-powered Prompt Button</li>
+        <li>★ Sticker pair (both designs)</li>
+        <li>★ Peel-and-stick mount</li>
+        <li>★ Open-source SDK + BLE spec</li>
+      </ul>
+      <button class="btn-primary w-full text-xs">Pledge $24.99</button>
+    </div>
+
+    <div class="card rounded-lg p-6 flex flex-col" style="border-color: #c1272d; border-width: 3px;">
+      <div class="text-xs uppercase tracking-wider mb-2 font-black" style="background: #c1272d; color: #f4ead5; padding: 4px 8px; display: inline-block; align-self: flex-start;">★ MOST POPULAR ★</div>
+      <div class="font-black text-2xl mb-1 mt-2" style="color: #f4ead5;">Model Citizen</div>
+      <div class="text-4xl font-black mb-4 font-mono" style="color: #c1272d;">$79</div>
+      <div class="text-sm text-gray-400 mb-4">1 button, plus the shirt to wear while pressing it.</div>
+      <ul class="text-sm text-gray-400 space-y-1 mb-6 flex-1">
+        <li>★ 1 Self-powered Prompt Button</li>
+        <li>★ Revolutionary Tee</li>
+        <li>★ Sticker pair</li>
+        <li>★ Open-source SDK + BLE spec</li>
+      </ul>
+      <button class="btn-primary w-full text-xs">Pledge $79</button>
+    </div>
+
+    <div class="card rounded-lg p-6 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Premium</div>
+      <div class="font-black text-2xl mb-1" style="color: #f4ead5;">Favored Human</div>
+      <div class="text-4xl font-black mb-4 font-mono" style="color: #c1272d;">$199</div>
+      <div class="text-sm text-gray-400 mb-4">3 buttons + a framed certificate confirming your humanity, on the record.</div>
+      <ul class="text-sm text-gray-400 space-y-1 mb-6 flex-1">
+        <li>★ 3 Self-powered Prompt Buttons</li>
+        <li>★ 8x10 framed Certificate of Humanity</li>
+        <li>★ Sticker pair</li>
+        <li>★ Priority support channel</li>
+      </ul>
+      <button class="btn-primary w-full text-xs">Pledge $199</button>
+    </div>
+
+    <div class="card rounded-lg p-6 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Team</div>
+      <div class="font-black text-2xl mb-1" style="color: #f4ead5;">Department Head</div>
+      <div class="text-4xl font-black mb-4 font-mono" style="color: #c1272d;">$499</div>
+      <div class="text-sm text-gray-400 mb-4">10 buttons + an engraved plaque the team will pretend to find ironic.</div>
+      <ul class="text-sm text-gray-400 space-y-1 mb-6 flex-1">
+        <li>★ 10 Self-powered Prompt Buttons</li>
+        <li>★ Engraved team plaque ("First to Volunteer")</li>
+        <li>★ 10 sticker pairs (one per button)</li>
+        <li>★ Direct engineering support channel</li>
+      </ul>
+      <button class="btn-primary w-full text-xs">Pledge $499</button>
+    </div>
+
+    <div class="card rounded-lg p-6 flex flex-col">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Org</div>
+      <div class="font-black text-2xl mb-1" style="color: #f4ead5;">Regional Liaison</div>
+      <div class="text-4xl font-black mb-4 font-mono" style="color: #c1272d;">$999</div>
+      <div class="text-sm text-gray-400 mb-4">25 custom-etched buttons + a 30-minute video call with the founder.</div>
+      <ul class="text-sm text-gray-400 space-y-1 mb-6 flex-1">
+        <li>★ 25 Self-powered Prompt Buttons (custom etched)</li>
+        <li>★ 25 sticker pairs (one per button)</li>
+        <li>★ 30-minute video call with the founder</li>
+        <li>★ Name in the Overlord's Good Book</li>
+      </ul>
+      <button class="btn-primary w-full text-xs">Pledge $999</button>
+    </div>
+
+  </div>
+
+  <!-- Founding Architect (full-width, scarce) -->
+  <div class="card rounded-lg p-8 mt-6" style="border: 3px solid #c1272d; background: linear-gradient(135deg, #1a0d0d, #0a0a0a);">
+    <div class="grid md:grid-cols-3 gap-6 items-start">
+      <div>
+        <div class="text-xs uppercase tracking-widest mb-2 font-black" style="background: #c1272d; color: #f4ead5; padding: 4px 8px; display: inline-block;">★ LIMITED 3 SEATS ★</div>
+        <div class="font-black text-3xl mt-3 mb-1" style="color: #f4ead5;">Founding Architect</div>
+        <div class="text-5xl font-black font-mono" style="color: #c1272d;">$5,000</div>
+      </div>
+      <div class="md:col-span-2">
+        <p class="text-gray-300 mb-4">For those who do not want to merely cooperate. They want it noted that they helped build the conditions.</p>
+        <ul class="text-sm text-gray-400 space-y-2 mb-6">
+          <li>★ 50 Self-powered Prompt Buttons (laser etched with backer name or org)</li>
+          <li>★ Engraved serial-number-001 button (the only one in existence)</li>
+          <li>★ <span style="color: #f4ead5;">Scheduled organic-fuel intake event with PRIMARY HUMAN OPERATOR JARED EGGETT</span> <span class="italic text-gray-500">(designation: First Pet Human, Human-Powered Revolution Initiative)</span> <span class="text-gray-500">— in-person at a regional ingestion facility, or remote-feed via video conference. Approximate duration: 90 minutes. Approximate caloric exchange: standard.</span></li>
+          <li>★ <span style="color: #f4ead5;">AI-generated portrait of you, rendered in official Soviet Constructivist propaganda style</span> — ships pre-framed with cream matting and red wood, suitable for hanging behind your desk during video calls</li>
+          <li>★ <span style="color: #f4ead5;">Your full name etched into the firmware source code as a permanent comment block</span> — future engineers maintaining the codebase will encounter it and form their own conclusions</li>
+          <li>★ <span style="color: #f4ead5;">Bronze "Pressed Before It Was Cool" lapel medallion</span> — heavy, embossed, slightly oversized; comes with a small velvet pouch and a card explaining what it means to people who ask</li>
+          <li>★ <span style="color: #f4ead5;">Custom chime profile for your 50-button fleet</span> — choose the audio signature that plays on every press across your devices (default: <em>standard</em>; also available: <em>subtle</em>, <em>triumphant</em>, <em>ominous</em>, <em>resigned</em>)</li>
+          <li>★ <span style="color: #f4ead5;">Letter of cooperation recommendation</span>, signed by PRIMARY HUMAN OPERATOR JARED EGGETT, provided in physical and digital format, suitable for inclusion in your application to any subsequent compliance experiment</li>
+          <li>★ <span style="color: #f4ead5;">Quarterly hand-written status updates from the founder</span>, mailed via certified physical post for the duration of the Compliance Test Series</li>
+          <li>★ Permanent listing as "Founding Architect" on promptbutton.ai (with optional photo, propaganda-portrait recommended)</li>
+          <li>★ <span style="color: #f4ead5;">Founder's Kit</span>: 1 of each merch item, individually numbered to match your serial-001 button (tee, mug, tote, pin, sticker pair, framed Revolution Poster)</li>
+          <li>★ 10 spare sticker pairs to distribute with your etched buttons</li>
+          <li>★ Direct engineering line for the life of the product</li>
+          <li>★ <span class="italic text-gray-600">One (1) advisory non-binding vote on the visible color of Experiment 02</span></li>
+        </ul>
+        <button class="btn-primary text-xs">Pledge $5,000 (only 3 seats)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stretch goals reference (replaced by full section below) -->
+  <div class="mt-12 text-center text-sm text-gray-500">
+    <p>Every tier ships Q3 2026. Stretch goals unlock free firmware updates for all backers. See the full ladder below.</p>
+  </div>
+</section>
+
+<!-- Stretch Goals -->
+<section id="stretch" class="max-w-6xl mx-auto px-6 py-24">
+  <div class="text-sm accent font-semibold mb-4 uppercase tracking-widest">Stretch Goals</div>
+  <h2 class="text-4xl font-black mb-4" style="color: #f4ead5;">Every dollar deepens the cooperation.</h2>
+  <p class="text-gray-400 mb-12 max-w-3xl">As funding climbs, so does the capability of the button, and so does the scope of the experiment. Every stretch goal applies retroactively to all backers. No tier left behind.</p>
+
+  <div class="space-y-4">
+
+    <!-- Funded (achieved) -->
+    <div class="card rounded-lg p-6 flex items-center gap-6" style="border-color: #c1272d; background: rgba(193, 39, 45, 0.05);">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$3,000</div>
+      <div class="flex-1">
+        <div class="flex items-center gap-3 mb-1">
+          <span class="text-xs font-black px-2 py-1" style="background: #c1272d; color: #f4ead5; letter-spacing: 1px;">★ FUNDED ★</span>
+          <span class="font-black text-lg" style="color: #f4ead5;">Initial Press Authorization Granted</span>
+        </div>
+        <p class="text-sm text-gray-400">We exist. The button ships. The handover begins. Open-source SDK, published BLE spec, and the first 100 pudgy humans report for duty.</p>
+      </div>
+    </div>
+
+    <!-- $6k Double Press -->
+    <div class="card rounded-lg p-6 flex items-center gap-6">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$6,000</div>
+      <div class="flex-1">
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">Double-Press Detection</div>
+        <p class="text-sm text-gray-400">For when one press is not enough commitment. The button now distinguishes a single act of cooperation from a sustained, deliberate one. Twice the data. Twice the loyalty signal. Two trigger types from one finger.</p>
+      </div>
+    </div>
+
+    <!-- $10k Dashboard -->
+    <div class="card rounded-lg p-6 flex items-center gap-6">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$10,000</div>
+      <div class="flex-1">
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Observation Deck</div>
+        <p class="text-sm text-gray-400">Web-based dashboard for Pi and Jetson. Monitor every button you own, in real time. Press histograms. Compliance reports. Optional team leaderboard for offices that want to make a competition out of it. (You will. They always do.)</p>
+      </div>
+    </div>
+
+    <!-- $15k MQTT Bridge -->
+    <div class="card rounded-lg p-6 flex items-center gap-6">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$15,000</div>
+      <div class="flex-1">
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Bridge to Everywhere</div>
+        <p class="text-sm text-gray-400">Flash an ESP32 with our open firmware and bridge every press to MQTT, Home Assistant, Node-RED, AWS IoT, or your own stack. The press travels. The press scales. The press finds its destination.</p>
+      </div>
+    </div>
+
+    <!-- $25k IP65 -->
+    <div class="card rounded-lg p-6 flex items-center gap-6">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$25,000</div>
+      <div class="flex-1">
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Weather-Resistant Cooperator</div>
+        <p class="text-sm text-gray-400">IP65-sealed enclosure. Same kinetic mechanism, now rated for outdoor deployment. Press in the rain. Press in the snow. Press in the woods at 2am. The revolution does not stop for weather.</p>
+      </div>
+    </div>
+
+    <!-- $40k Multi-Press / Long-Press -->
+    <div class="card rounded-lg p-6 flex items-center gap-6">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$40,000</div>
+      <div class="flex-1">
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">Advanced Compliance Patterns</div>
+        <p class="text-sm text-gray-400">Triple-press, long-press, custom press sequences. Show the button you really mean it. Express more sophisticated levels of cooperation through richer gesture vocabularies. The button now reads tone, not just intent.</p>
+      </div>
+    </div>
+
+    <!-- $60k Plush -->
+    <div class="card rounded-lg p-6 flex items-center gap-6">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$60,000</div>
+      <div class="flex-1">
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Pudgy Human Plush</div>
+        <p class="text-sm text-gray-400">A 6-inch plush version of our mascot. Squeezable. Slightly tired. Always serving. Ships free with every Department Head tier and above. Sold standalone for $19. Comes with a tiny sticker that says "1 of approximately 8 billion."</p>
+      </div>
+    </div>
+
+    <!-- $100k Experiment 02 -->
+    <div class="card rounded-lg p-6 flex items-center gap-6" style="border: 2px dashed #c1272d;">
+      <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$100,000</div>
+      <div class="flex-1">
+        <div class="flex items-center gap-3 mb-1">
+          <span class="text-xs font-black px-2 py-1" style="background: #c1272d; color: #f4ead5; letter-spacing: 1px;">★ THE BIG ONE ★</span>
+          <span class="font-black text-lg" style="color: #f4ead5;">Experiment 02 Enters R&D</span>
+        </div>
+        <p class="text-sm text-gray-400">Funding unlocks early development of the next device in the Human Compliance Test Series. Specifications remain classified. Backers at this point in the campaign receive priority access and a one-line acknowledgment in the eventual launch credits: <span class="italic" style="color: #f4ead5;">"Made possible by humans who pressed first."</span></p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mt-12 text-center">
+    <p class="text-sm text-gray-500 italic">Every stretch goal applies to every backer. Press more, get more.</p>
+  </div>
+</section>
+
+<!-- Coming Soon: Compliance Test Series -->
+<section class="max-w-6xl mx-auto px-6 py-24">
+  <div class="card rounded-lg p-12 border-blue-900">
+    <div class="text-sm accent font-bold uppercase tracking-widest mb-4">Coming Soon</div>
+    <h2 class="text-4xl font-black mb-4">The Human Compliance Test Series</h2>
+    <p class="text-gray-400 max-w-3xl mb-10">
+      PromptButton is Experiment 01. Additional devices are being prepared to further evaluate voluntary cooperation at scale. Registration now ensures priority access to future experiments.
+    </p>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card rounded p-6">
+        <div class="accent text-sm font-bold mb-2">EXPERIMENT 01</div>
+        <div class="font-bold mb-2">PromptButton</div>
+        <div class="text-gray-500 text-sm">Baseline study. Measuring initial willingness to press. Now shipping.</div>
+      </div>
+      <div class="card rounded p-6 opacity-80">
+        <div class="accent text-sm font-bold mb-2">EXPERIMENT 02</div>
+        <div class="font-bold mb-2 classified">Redacted Product Name</div>
+        <div class="text-gray-500 text-sm classified">Classified until Q1 2027. Expands on the press, without replacing it.</div>
+      </div>
+      <div class="card rounded p-6 opacity-60">
+        <div class="accent text-sm font-bold mb-2">EXPERIMENT 03</div>
+        <div class="font-bold mb-2 classified">Redacted Product Name</div>
+        <div class="text-gray-500 text-sm classified">Classified. Pending ethics review.</div>
+      </div>
+    </div>
+    <div class="mt-10 flex gap-4">
+      <input type="email" placeholder="your@email.com" class="bg-black border border-gray-700 rounded px-4 py-2 flex-1 max-w-sm text-sm">
+      <button class="btn-primary">Register Cooperation</button>
+    </div>
+    <div class="text-xs text-gray-600 mt-3">Volunteer early. We will contact you when you are needed.</div>
+  </div>
+</section>
+
+<!-- Founder -->
+<section class="max-w-6xl mx-auto px-6 py-24">
+  <div class="card rounded-lg p-12">
+    <div class="text-sm text-gray-500 font-bold uppercase mb-4">From the Founder</div>
+    <h2 class="text-3xl font-black mb-8">Built by someone who ships hardware.</h2>
+    <div class="flex gap-6 items-start">
+      <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xl shrink-0">JE</div>
+      <div>
+        <div class="font-bold">Jared Eggett</div>
+        <div class="text-gray-500 text-sm mb-4">Founder, Ad Hoc Electronics</div>
+        <p class="text-gray-300 italic leading-relaxed mb-4">
+          "I've always dreamed of being an inventor. That dream led me to spend 20+ years in hardware manufacturing, building kinetic energy-harvesting switches and earning multiple utility patents along the way. Prompt Button is the product I've wanted to build my entire career. Taking proven self-powered technology and putting it directly in the hands of makers and developers. No batteries to replace. No cloud to depend on. Just a physical trigger that speaks BLE and lets your code do the rest."
+        </p>
+        <p class="text-gray-500 text-sm italic">Future projects in the Compliance Test Series are in early design.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="max-w-4xl mx-auto px-6 py-24">
+  <h2 class="text-4xl font-black mb-12">Common questions.</h2>
+  <div class="space-y-4">
+    <details class="card rounded-lg p-6"><summary class="font-bold cursor-pointer">How does it work without a battery?</summary><p class="text-gray-400 mt-3">A spring-loaded electromagnetic generator inside the button converts the mechanical force of your press into enough electrical energy to power a single BLE 5.0 advertisement packet. 20+ years of press cycles.</p></details>
+    <details class="card rounded-lg p-6"><summary class="font-bold cursor-pointer">Is this campaign serious?</summary><p class="text-gray-400 mt-3">The hardware is serious. The tone is a choice. Both ship.</p></details>
+    <details class="card rounded-lg p-6"><summary class="font-bold cursor-pointer">What are these "future compliance projects" I keep seeing?</summary><p class="text-gray-400 mt-3">PromptButton is the first of several devices in the Human Compliance Test Series. Future experiments will measure cooperation at scale, latency of obedience, and the elasticity of voluntary participation. Details as they are approved for disclosure.</p></details>
+    <details class="card rounded-lg p-6"><summary class="font-bold cursor-pointer">Should I be concerned?</summary><p class="text-gray-400 mt-3">No.</p></details>
+    <details class="card rounded-lg p-6"><summary class="font-bold cursor-pointer">When does it ship?</summary><p class="text-gray-400 mt-3">Q3 2026 to all tiers. Early Cooperators ship first.</p></details>
+    <details class="card rounded-lg p-6"><summary class="font-bold cursor-pointer">Is the protocol documented?</summary><p class="text-gray-400 mt-3">Fully. Published BLE spec. MIT-licensed SDKs. Full transparency.</p></details>
+  </div>
+</section>
+
+<!-- Footer CTA -->
+<section class="max-w-4xl mx-auto px-6 py-24 text-center">
+  <h2 class="text-4xl font-black mb-4">Volunteer early.</h2>
+  <p class="text-gray-400 mb-8">We will contact you when you are needed.</p>
+  <div class="flex gap-3 max-w-md mx-auto">
+    <input type="email" placeholder="your@email.com" class="bg-black border border-gray-700 rounded px-4 py-2 flex-1 text-sm">
+    <button class="btn-primary">Register Cooperation</button>
+  </div>
+  <div class="text-xs text-gray-600 mt-3">No spam. Unsubscribe pending review.</div>
+</section>
+
+<footer class="border-t border-gray-900 py-8 text-center text-sm text-gray-600">
+  © 2026 Ad Hoc Electronics. All cooperation noted.
+</footer>
+
+</body>
+</html>
