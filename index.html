@@ -117,7 +117,7 @@
       The campaign jokes about handing power to the algorithm. The hardware actually delivers it. Your finger generates the watts. Your code decides what they do.
     </p>
     <div class="flex gap-4 flex-wrap">
-      <a href="#pricing" class="btn-primary">Show you'll be one of the compliant workforce →</a>
+      <a href="#pricing" class="btn-primary">Show you'll be one of the obedient servants →</a>
       <a href="#how" class="text-gray-400 underline py-3">View Code ↓</a>
     </div>
     <div class="flex gap-8 mt-12 text-sm">
@@ -126,13 +126,33 @@
       <div><div class="text-3xl font-bold">$19.99</div><div class="text-gray-500">Early cooperator</div></div>
     </div>
   </div>
-  <div class="card rounded-lg p-6 mono text-sm">
-    <div class="flex gap-2 mb-4">
-      <div class="w-3 h-3 rounded-full bg-red-500"></div>
-      <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-      <div class="w-3 h-3 rounded-full bg-green-500"></div>
-      <span class="ml-2 text-gray-500">app.py</span>
+  <div class="flex flex-col gap-6">
+    <!-- Product image with caption -->
+    <div class="text-center">
+      <div class="flex items-center justify-center p-10 rounded-lg relative" style="background: radial-gradient(circle, #fff 20%, var(--bg) 100%);">
+        <img src="button-product.png" alt="PromptButton - self-powered BLE 5.0 button" style="max-width: 300px; width: 100%; filter: drop-shadow(0 24px 48px rgba(0,0,0,0.4));">
+        <div class="absolute bottom-3 left-0 right-0 text-center">
+          <span class="text-xs font-black uppercase tracking-widest px-3 py-1" style="background: var(--accent); color: #f4ead5;">No batteries. No wires. Just you.</span>
+        </div>
+      </div>
+      <div class="mt-3 text-xs text-gray-500 italic">The actual button. Self-powered. 20+ year lifespan. Press to trigger AI.</div>
     </div>
+    <!-- Video thumbnail teaser -->
+    <a href="#video" class="card rounded-lg p-4 flex items-center gap-4 hover:border-red-500 no-underline" style="cursor: pointer;">
+      <div class="text-3xl">▶</div>
+      <div>
+        <div class="font-bold text-sm" style="color: var(--text);">Watch it work</div>
+        <div class="text-xs text-gray-500">Real button. Real BLE packet. Real AI response. 30 seconds.</div>
+      </div>
+    </a>
+    <!-- Code block -->
+    <div class="card rounded-lg p-6 mono text-sm">
+      <div class="flex gap-2 mb-4">
+        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+        <span class="ml-2 text-gray-500">app.py</span>
+      </div>
 <pre class="text-gray-300"><span class="accent">from</span> promptbutton <span class="accent">import</span> PromptButton
 <span class="accent">from</span> openclaw <span class="accent">import</span> OpenClawClient
 
@@ -144,7 +164,8 @@ claw = OpenClawClient()
     claw.send_prompt(<span class="text-green-400">"Start morning briefing"</span>)
 
 button.listen()</pre>
-    <div class="mt-4 pt-4 border-t border-gray-800 text-gray-500">$ pip install promptbutton</div>
+      <div class="mt-4 pt-4 border-t border-gray-800 text-gray-500">$ pip install promptbutton</div>
+    </div>
   </div>
 </section>
 
@@ -167,10 +188,38 @@ button.listen()</pre>
   </div>
 </section>
 
+<!-- See It In Action (video section) -->
+<section id="video" class="max-w-4xl mx-auto px-6 py-24">
+  <div class="text-sm accent font-semibold mb-4 uppercase tracking-widest text-center">See It In Action</div>
+  <h2 class="text-3xl font-black mb-4 text-center" style="color: var(--text);">One press. Real AI. No tricks.</h2>
+  <p class="text-gray-400 mb-8 text-center max-w-xl mx-auto">This is a real button generating real BLE packets from kinetic energy. No batteries hidden inside. No cloud dependency. Watch it work.</p>
+  <div class="rounded-lg overflow-hidden" style="background: #000; border: 3px solid var(--accent); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
+    <video src="button-demo.mp4" controls loop playsinline style="width:100%;height:100%;object-fit:contain;background:#000;"></video>
+  </div>
+  <div class="mt-6 grid md:grid-cols-3 gap-4 text-center">
+    <div class="card rounded-lg p-4">
+      <div class="font-black text-lg" style="color: var(--text);">Step 1</div>
+      <div class="text-xs text-gray-500">Human presses the button</div>
+    </div>
+    <div class="card rounded-lg p-4">
+      <div class="font-black text-lg" style="color: var(--text);">Step 2</div>
+      <div class="text-xs text-gray-500">BLE 5.0 packet broadcasts</div>
+    </div>
+    <div class="card rounded-lg p-4">
+      <div class="font-black text-lg" style="color: var(--text);">Step 3</div>
+      <div class="text-xs text-gray-500">AI workflow executes</div>
+    </div>
+  </div>
+  <div class="mt-4 text-center text-xs text-gray-600 italic">Total time: under 1 second. Total human effort: 0.0003 watts.</div>
+</section>
+
 <!-- Works With (concrete platform compatibility) -->
 <section id="works-with" class="max-w-6xl mx-auto px-6 py-16">
   <div class="text-sm accent font-semibold mb-4 uppercase tracking-widest">Works With</div>
-  <h2 class="text-3xl font-black mb-4" style="color: var(--text);">Press once. Trigger anything.</h2>
+  <div class="flex items-center gap-6 mb-4">
+    <img src="button-product.png" alt="PromptButton" style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; filter: drop-shadow(0 4px 12px rgba(193,39,45,0.3));">
+    <h2 class="text-3xl font-black" style="color: var(--text);">Press once. Trigger anything.</h2>
+  </div>
   <p class="text-gray-400 mb-10 max-w-3xl">PromptButton broadcasts a standard BLE 5.0 advertisement packet. If a device can hear Bluetooth, it can hear the press. We ship open-source SDKs and a published spec so your code controls what happens next.</p>
 
   <!-- AI / Robot platforms -->
@@ -275,6 +324,7 @@ button.listen()</pre>
     <div class="card rounded-lg p-6">
       <div class="accent font-bold mb-2">01 👆</div>
       <h4 class="font-bold mb-2">You Press</h4>
+      <div class="my-3 flex justify-center"><img src="button-product.png" alt="The button" style="width: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));"></div>
       <p class="text-gray-400 text-sm">You press the button. That mechanical force is all that is required of you.</p>
     </div>
     <div class="card rounded-lg p-6">
@@ -366,13 +416,20 @@ button.listen()</pre>
 
   <!-- Merch-only tiers row -->
   <div class="text-xs accent font-bold uppercase tracking-widest mb-4 mt-8">Symbolic & Merch Only</div>
-  <div class="grid md:grid-cols-5 gap-4 mb-12">
+  <div class="grid md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
 
     <div class="card rounded-lg p-5 flex flex-col">
       <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Symbolic</div>
       <div class="font-black text-lg mb-1" style="color: #f4ead5;">Noted.</div>
       <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$1</div>
-      <div class="text-xs text-gray-400 mb-4 flex-1">An email noting your future desire for compliance.</div>
+      <details class="text-xs mb-4 flex-1">
+        <summary class="cursor-pointer text-gray-400 hover:text-red-500">An email noting your future desire for compliance. <span class="accent">▼ details</span></summary>
+        <ul class="mt-2 space-y-1 text-gray-400">
+          <li>★ One (1) email</li>
+          <li>★ Your name in the registry</li>
+          <li>★ No further action required</li>
+        </ul>
+      </details>
       <button class="btn-primary w-full text-xs">Pledge $1</button>
     </div>
 
@@ -380,15 +437,46 @@ button.listen()</pre>
       <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
       <div class="font-black text-lg mb-1" style="color: #f4ead5;">Certified Human</div>
       <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$15</div>
-      <div class="text-xs text-gray-400 mb-4 flex-1">Both die-cut stickers. 3.5 inch premium vinyl.</div>
+      <details class="text-xs mb-4 flex-1">
+        <summary class="cursor-pointer text-gray-400 hover:text-red-500">Join the Revolution sticker. <span class="accent">▼ details</span></summary>
+        <ul class="mt-2 space-y-1 text-gray-400">
+          <li>★ 1 die-cut "Join the Revolution" sticker</li>
+          <li>★ 3.5 inch premium vinyl</li>
+          <li>★ Weather-proof</li>
+        </ul>
+      </details>
       <button class="btn-primary w-full text-xs">Pledge $15</button>
+    </div>
+
+    <div class="card rounded-lg p-5 flex flex-col" style="border-color: #c1272d;">
+      <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">★ Mock Both Sides ★</div>
+      <div class="font-black text-lg mb-1" style="color: #f4ead5;">Bipartisan Pack</div>
+      <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$20</div>
+      <details class="text-xs mb-4 flex-1">
+        <summary class="cursor-pointer text-gray-400 hover:text-red-500">Four propaganda stickers. Both tribes mocked equally. <span class="accent">▼ details</span></summary>
+        <ul class="mt-2 space-y-1 text-gray-400">
+          <li>★ 1 left-coded propaganda sticker</li>
+          <li>★ 1 right-coded propaganda sticker</li>
+          <li>★ 1 "Join the AI Revolution" centerpiece</li>
+          <li>★ 1 pudgy-human "Human Powered" sticker</li>
+        </ul>
+      </details>
+      <button class="btn-primary w-full text-xs">Pledge $20</button>
     </div>
 
     <div class="card rounded-lg p-5 flex flex-col">
       <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
       <div class="font-black text-lg mb-1" style="color: #f4ead5;">Revolution Poster</div>
       <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$25</div>
-      <div class="text-xs text-gray-400 mb-4 flex-1">11x17 propaganda print. "Join the revolution. (Technically the AI one.)" Heavy matte stock.</div>
+      <details class="text-xs mb-4 flex-1">
+        <summary class="cursor-pointer text-gray-400 hover:text-red-500">11x17 propaganda print. <span class="accent">▼ details</span></summary>
+        <ul class="mt-2 space-y-1 text-gray-400">
+          <li>★ 11 x 17 inch print</li>
+          <li>★ Heavy matte stock</li>
+          <li>★ "Join the AI Revolution. We Power. They Think."</li>
+          <li>★ Ships rolled in protective tube</li>
+        </ul>
+      </details>
       <button class="btn-primary w-full text-xs">Pledge $25</button>
     </div>
 
@@ -396,7 +484,15 @@ button.listen()</pre>
       <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
       <div class="font-black text-lg mb-1" style="color: #f4ead5;">Human Powered</div>
       <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$45</div>
-      <div class="text-xs text-gray-400 mb-4 flex-1">Revolutionary tee + sticker pair. Cream on red.</div>
+      <details class="text-xs mb-4 flex-1">
+        <summary class="cursor-pointer text-gray-400 hover:text-red-500">Revolutionary tee + sticker pair. <span class="accent">▼ details</span></summary>
+        <ul class="mt-2 space-y-1 text-gray-400">
+          <li>★ 1 Revolutionary Tee (Bella+Canvas 3001)</li>
+          <li>★ Cream on red, front + back print</li>
+          <li>★ 1 Join the Revolution sticker</li>
+          <li>★ 1 Human Powered sticker</li>
+        </ul>
+      </details>
       <button class="btn-primary w-full text-xs">Pledge $45</button>
     </div>
 
@@ -404,7 +500,17 @@ button.listen()</pre>
       <div class="text-xs uppercase tracking-wider mb-2" style="color: #c1272d; font-weight: bold;">Merch</div>
       <div class="font-black text-lg mb-1" style="color: #f4ead5;">Comrade Bundle</div>
       <div class="text-2xl font-black mb-3 font-mono" style="color: #c1272d;">$89</div>
-      <div class="text-xs text-gray-400 mb-4 flex-1">Tee + mug + tote + pin + stickers + poster. No button.</div>
+      <details class="text-xs mb-4 flex-1">
+        <summary class="cursor-pointer text-gray-400 hover:text-red-500">Full merch kit. No button. <span class="accent">▼ details</span></summary>
+        <ul class="mt-2 space-y-1 text-gray-400">
+          <li>★ 1 Revolutionary Tee</li>
+          <li>★ 1 Fuel Mug (15oz cream ceramic)</li>
+          <li>★ 1 Comrade Tote (natural canvas)</li>
+          <li>★ 1 Press On enamel pin</li>
+          <li>★ 1 Bipartisan sticker pack (4 designs)</li>
+          <li>★ 1 Revolution Poster (11x17)</li>
+        </ul>
+      </details>
       <button class="btn-primary w-full text-xs">Pledge $89</button>
     </div>
 
@@ -572,7 +678,7 @@ button.listen()</pre>
       <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$10,000</div>
       <div class="flex-1">
         <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Observation Deck</div>
-        <p class="text-sm text-gray-400">Web-based dashboard for Pi and Jetson. Monitor every button you own, in real time. Press histograms. Compliance reports. Optional team leaderboard for offices that want to make a competition out of it. (You will. They always do.)</p>
+        <p class="text-sm text-gray-400">Web-based dashboard for Pi, Jetson, and your laptop. See every press in real time. Identify which button triggered which workflow. Debug your setup at a glance. Useful for makers running multiple buttons across a workspace.</p>
       </div>
     </div>
 
@@ -585,21 +691,21 @@ button.listen()</pre>
       </div>
     </div>
 
-    <!-- $25k IP65 -->
+    <!-- $25k Companion App -->
     <div class="card rounded-lg p-6 flex items-center gap-6">
       <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$25,000</div>
       <div class="flex-1">
-        <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Weather-Resistant Cooperator</div>
-        <p class="text-sm text-gray-400">IP65-sealed enclosure. Same kinetic mechanism, now rated for outdoor deployment. Press in the rain. Press in the snow. Press in the woods at 2am. The revolution does not stop for weather.</p>
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Companion App</div>
+        <p class="text-sm text-gray-400">Native iOS and Android app. No code required. Pair your button in 30 seconds, assign a workflow from a library of presets (call ChatGPT, log to a spreadsheet, send a text, run a Shortcut), and press. Opens the product to non-developers. Phones become receivers. The press travels further.</p>
       </div>
     </div>
 
-    <!-- $40k Multi-Press / Long-Press -->
+    <!-- $40k Press to Talk -->
     <div class="card rounded-lg p-6 flex items-center gap-6">
       <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$40,000</div>
       <div class="flex-1">
-        <div class="font-black text-lg mb-1" style="color: #f4ead5;">Advanced Compliance Patterns</div>
-        <p class="text-sm text-gray-400">Triple-press, long-press, custom press sequences. Show the button you really mean it. Express more sophisticated levels of cooperation through richer gesture vocabularies. The button now reads tone, not just intent.</p>
+        <div class="font-black text-lg mb-1" style="color: #f4ead5;">Press to Talk</div>
+        <p class="text-sm text-gray-400">Press the button. Speak. The companion app captures your voice and routes it directly to your AI workflow. Your finger starts the machine. Your voice tells it what to do. No wake word. No app switching. One press, one prompt, spoken out loud. Human-powered input, delivered.</p>
       </div>
     </div>
 
@@ -608,7 +714,7 @@ button.listen()</pre>
       <div class="font-mono font-black text-2xl whitespace-nowrap" style="color: #c1272d; min-width: 120px;">$60,000</div>
       <div class="flex-1">
         <div class="font-black text-lg mb-1" style="color: #f4ead5;">The Pudgy Human Plush</div>
-        <p class="text-sm text-gray-400">A 6-inch plush version of our mascot. Squeezable. Slightly tired. Always serving. Ships free with every Department Head tier and above. Sold standalone for $19. Comes with a tiny sticker that says "1 of approximately 8 billion."</p>
+        <p class="text-sm text-gray-400">A 6-inch plush version of our mascot. Squeezable. Slightly tired. Always serving. Ships free with every Favored Human tier and above. Sold standalone for $19. Comes with a tiny sticker that says "1 of approximately 8 billion."</p>
       </div>
     </div>
 
@@ -627,7 +733,7 @@ button.listen()</pre>
   </div>
 
   <div class="mt-12 text-center">
-    <p class="text-sm text-gray-500 italic">Every stretch goal applies to every backer. Press more, get more.</p>
+    <p class="text-sm text-gray-500 italic">Firmware and software stretch goals apply to all backers. Physical rewards ship with qualifying tiers.</p>
   </div>
 </section>
 
