@@ -831,11 +831,51 @@ button.listen()</pre>
   © 2026 Ad Hoc Electronics. All cooperation noted.
 </footer>
 
+<!-- Pledge email capture modal -->
+<div id="pledge-modal" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;">
+  <div class="card rounded-lg" style="max-width:460px;width:100%;padding:32px;position:relative;">
+    <button id="pledge-modal-close" aria-label="Close" style="position:absolute;top:10px;right:14px;background:transparent;border:0;color:#f4ead5;font-size:24px;cursor:pointer;line-height:1;">&times;</button>
+    <div class="text-xs accent font-bold uppercase tracking-widest mb-2">Pre-Launch Registration</div>
+    <h3 class="text-2xl font-black mb-2" style="color:#f4ead5;">Reserve Your Tier</h3>
+    <p class="text-sm text-gray-400 mb-4">You chose: <span id="pledge-modal-tier" style="color:#c1272d;font-weight:900;"></span></p>
+    <p class="text-xs text-gray-500 mb-5">The Kickstarter is not live yet. Enter your email and we will send you the pledge link the moment the campaign opens. Your tier selection is noted.</p>
+    <form id="pledge-form">
+      <input type="email" name="email" required placeholder="your@email.com" class="bg-black border border-gray-700 rounded px-4 py-2 w-full text-sm mb-3">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <label class="flex items-start gap-2 text-xs text-gray-500 cursor-pointer mb-4">
+        <input type="checkbox" name="consent" required class="mt-0.5">
+        <span>I voluntarily submit to future dispatches regarding the Compliance Test Series.</span>
+      </label>
+      <button type="submit" class="btn-primary w-full">Reserve My Tier</button>
+      <div id="pledge-status" class="text-xs mt-3"></div>
+    </form>
+  </div>
+</div>
+
 <script>
   (function () {
     const params = new URLSearchParams(window.location.search);
     const utmSource = params.get('utm_source') || '';
 
+    async function postSubscribe(payload) {
+      if (utmSource) payload.utm_source = utmSource;
+      const r = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const j = await r.json().catch(function () { return {}; });
+      return { ok: r.ok && j.ok, body: j };
+    }
+
+    function friendlyError(err) {
+      return err === 'invalid_email' ? 'Invalid email address.'
+        : err === 'consent_required' ? 'Consent is required.'
+        : err === 'rate_limited' ? 'Too many attempts. Try again shortly.'
+        : 'Submission failed. Try again.';
+    }
+
+    // ---------- Inline subscribe forms ----------
     document.querySelectorAll('form[data-subscribe-form]').forEach(function (form) {
       form.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -843,21 +883,15 @@ button.listen()</pre>
         const btn = form.querySelector('button[type="submit"]');
         const data = Object.fromEntries(new FormData(form).entries());
         data.consent = form.querySelector('input[name="consent"]').checked;
-        if (utmSource) data.utm_source = utmSource;
 
         if (status) { status.textContent = 'Submitting request for cooperation...'; status.style.color = '#9ca3af'; }
         if (btn) btn.disabled = true;
 
         try {
-          const r = await fetch('/api/subscribe', {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(data),
-          });
-          const j = await r.json().catch(function () { return {}; });
-          if (r.ok && j.ok) {
+          const { ok, body } = await postSubscribe(data);
+          if (ok) {
             if (status) {
-              status.textContent = j.status === 'already_subscribed'
+              status.textContent = body.status === 'already_subscribed'
                 ? 'Cooperation already on file. Stand by.'
                 : 'Cooperation registered. Stand by for further instructions.';
               status.style.color = '#c1272d';
@@ -865,11 +899,7 @@ button.listen()</pre>
             form.querySelector('input[name="email"]').value = '';
             form.querySelector('input[name="consent"]').checked = false;
           } else {
-            const err = j.error === 'invalid_email' ? 'Invalid email address.'
-              : j.error === 'consent_required' ? 'Consent is required.'
-              : j.error === 'rate_limited' ? 'Too many attempts. Try again shortly.'
-              : 'Submission failed. Try again.';
-            if (status) { status.textContent = err; status.style.color = '#ef4444'; }
+            if (status) { status.textContent = friendlyError(body.error); status.style.color = '#ef4444'; }
           }
         } catch (_) {
           if (status) { status.textContent = 'Network error. Try again.'; status.style.color = '#ef4444'; }
@@ -878,6 +908,85 @@ button.listen()</pre>
         }
       });
     });
+
+    // ---------- Pledge buttons → modal ----------
+    const modal = document.getElementById('pledge-modal');
+    const modalClose = document.getElementById('pledge-modal-close');
+    const modalTier = document.getElementById('pledge-modal-tier');
+    const pledgeForm = document.getElementById('pledge-form');
+    const pledgeStatus = document.getElementById('pledge-status');
+    let currentTier = '';
+
+    function openModal(tier) {
+      currentTier = tier;
+      modalTier.textContent = tier;
+      if (pledgeStatus) pledgeStatus.textContent = '';
+      pledgeForm.querySelector('input[name="email"]').value = '';
+      pledgeForm.querySelector('input[name="consent"]').checked = false;
+      modal.style.display = 'flex';
+      setTimeout(function () { pledgeForm.querySelector('input[name="email"]').focus(); }, 50);
+    }
+    function closeModal() { modal.style.display = 'none'; }
+
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+    function tierLabelFor(btn) {
+      const card = btn.closest('.card') || btn.closest('.rounded-lg');
+      let name = '';
+      let price = '';
+      if (card) {
+        const titleEl = card.querySelector('.font-black.text-lg, .font-black.text-2xl, .font-black.text-3xl');
+        if (titleEl) name = (titleEl.textContent || '').trim();
+        const priceEl = card.querySelector('.font-mono');
+        if (priceEl) price = (priceEl.textContent || '').trim();
+      }
+      if (!name) name = 'Backer';
+      return price ? name + ' — ' + price : name;
+    }
+
+    document.querySelectorAll('button').forEach(function (btn) {
+      const txt = (btn.textContent || '').trim();
+      if (/^Pledge\s+\$/i.test(txt)) {
+        btn.setAttribute('type', 'button');
+        btn.addEventListener('click', function () {
+          openModal(tierLabelFor(btn));
+        });
+      }
+    });
+
+    if (pledgeForm) {
+      pledgeForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const btn = pledgeForm.querySelector('button[type="submit"]');
+        const data = Object.fromEntries(new FormData(pledgeForm).entries());
+        data.consent = pledgeForm.querySelector('input[name="consent"]').checked;
+        data.source = 'pledge';
+        data.section = currentTier.slice(0, 64);
+
+        if (pledgeStatus) { pledgeStatus.textContent = 'Reserving...'; pledgeStatus.style.color = '#9ca3af'; }
+        if (btn) btn.disabled = true;
+
+        try {
+          const { ok, body } = await postSubscribe(data);
+          if (ok) {
+            if (pledgeStatus) {
+              pledgeStatus.textContent = body.status === 'already_subscribed'
+                ? 'You are already on the list. Your tier has been noted.'
+                : 'Tier reserved. Kickstarter link on its way when the campaign opens.';
+              pledgeStatus.style.color = '#c1272d';
+            }
+          } else {
+            if (pledgeStatus) { pledgeStatus.textContent = friendlyError(body.error); pledgeStatus.style.color = '#ef4444'; }
+          }
+        } catch (_) {
+          if (pledgeStatus) { pledgeStatus.textContent = 'Network error. Try again.'; pledgeStatus.style.color = '#ef4444'; }
+        } finally {
+          if (btn) btn.disabled = false;
+        }
+      });
+    }
   })();
 </script>
 
