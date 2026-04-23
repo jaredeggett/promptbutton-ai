@@ -765,13 +765,9 @@ button.listen()</pre>
         <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <button type="submit" class="btn-primary">Register Cooperation</button>
       </div>
-      <label class="flex items-start gap-2 mt-4 text-xs text-gray-500 cursor-pointer">
-        <input type="checkbox" name="consent" required class="mt-0.5">
-        <span>I voluntarily submit to future dispatches regarding the Compliance Test Series.</span>
-      </label>
       <div data-subscribe-status class="text-xs mt-3"></div>
     </form>
-    <div class="text-xs text-gray-600 mt-3">Volunteer early. We will contact you when you are needed.</div>
+    <div class="text-xs text-gray-600 mt-3">By registering, you agree to receive launch updates. Unsubscribe anytime.</div>
   </div>
 </section>
 
@@ -818,13 +814,9 @@ button.listen()</pre>
       <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <button type="submit" class="btn-primary">Register Cooperation</button>
     </div>
-    <label class="flex items-start gap-2 mt-4 text-xs text-gray-500 cursor-pointer justify-center">
-      <input type="checkbox" name="consent" required class="mt-0.5">
-      <span>I voluntarily submit to future dispatches regarding the Compliance Test Series.</span>
-    </label>
     <div data-subscribe-status class="text-xs mt-3"></div>
   </form>
-  <div class="text-xs text-gray-600 mt-3">No spam. Unsubscribe pending review.</div>
+  <div class="text-xs text-gray-600 mt-3">By registering, you agree to receive launch updates. Unsubscribe anytime.</div>
 </section>
 
 <footer class="border-t border-gray-900 py-8 text-center text-sm text-gray-600">
@@ -840,13 +832,10 @@ button.listen()</pre>
     <p class="text-sm text-gray-400 mb-4">You chose: <span id="pledge-modal-tier" style="color:#c1272d;font-weight:900;"></span></p>
     <p class="text-xs text-gray-500 mb-5">The Kickstarter is not live yet. Enter your email and we will send you the pledge link the moment the campaign opens. Your tier selection is noted.</p>
     <form id="pledge-form">
-      <input type="email" name="email" required placeholder="your@email.com" class="bg-black border border-gray-700 rounded px-4 py-2 w-full text-sm mb-3">
+      <input type="email" name="email" required placeholder="your@email.com" class="bg-black border border-gray-700 rounded px-4 py-2 w-full text-sm mb-4">
       <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-      <label class="flex items-start gap-2 text-xs text-gray-500 cursor-pointer mb-4">
-        <input type="checkbox" name="consent" required class="mt-0.5">
-        <span>I voluntarily submit to future dispatches regarding the Compliance Test Series.</span>
-      </label>
       <button type="submit" class="btn-primary w-full">Reserve My Tier</button>
+      <div class="text-xs text-gray-600 mt-3 text-center">By reserving, you agree to receive launch updates. Unsubscribe anytime.</div>
       <div id="pledge-status" class="text-xs mt-3"></div>
     </form>
   </div>
@@ -882,7 +871,7 @@ button.listen()</pre>
         const status = form.querySelector('[data-subscribe-status]');
         const btn = form.querySelector('button[type="submit"]');
         const data = Object.fromEntries(new FormData(form).entries());
-        data.consent = form.querySelector('input[name="consent"]').checked;
+        data.consent = true;
 
         if (status) { status.textContent = 'Submitting request for cooperation...'; status.style.color = '#9ca3af'; }
         if (btn) btn.disabled = true;
@@ -897,7 +886,6 @@ button.listen()</pre>
               status.style.color = '#c1272d';
             }
             form.querySelector('input[name="email"]').value = '';
-            form.querySelector('input[name="consent"]').checked = false;
           } else {
             if (status) { status.textContent = friendlyError(body.error); status.style.color = '#ef4444'; }
           }
@@ -922,7 +910,6 @@ button.listen()</pre>
       modalTier.textContent = tier;
       if (pledgeStatus) pledgeStatus.textContent = '';
       pledgeForm.querySelector('input[name="email"]').value = '';
-      pledgeForm.querySelector('input[name="consent"]').checked = false;
       modal.style.display = 'flex';
       setTimeout(function () { pledgeForm.querySelector('input[name="email"]').focus(); }, 50);
     }
@@ -961,7 +948,7 @@ button.listen()</pre>
         e.preventDefault();
         const btn = pledgeForm.querySelector('button[type="submit"]');
         const data = Object.fromEntries(new FormData(pledgeForm).entries());
-        data.consent = pledgeForm.querySelector('input[name="consent"]').checked;
+        data.consent = true;
         data.source = 'pledge';
         data.section = currentTier.slice(0, 64);
 
