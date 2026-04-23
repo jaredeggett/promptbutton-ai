@@ -827,17 +827,26 @@ button.listen()</pre>
 <div id="pledge-modal" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;">
   <div class="card rounded-lg" style="max-width:460px;width:100%;padding:32px;position:relative;">
     <button id="pledge-modal-close" aria-label="Close" style="position:absolute;top:10px;right:14px;background:transparent;border:0;color:#f4ead5;font-size:24px;cursor:pointer;line-height:1;">&times;</button>
-    <div class="text-xs accent font-bold uppercase tracking-widest mb-2">Pre-Launch Registration</div>
-    <h3 class="text-2xl font-black mb-2" style="color:#f4ead5;">Reserve Your Tier</h3>
-    <p class="text-sm text-gray-400 mb-4">You chose: <span id="pledge-modal-tier" style="color:#c1272d;font-weight:900;"></span></p>
-    <p class="text-xs text-gray-500 mb-5">The Kickstarter is not live yet. Enter your email and we will send you the pledge link the moment the campaign opens. Your tier selection is noted.</p>
-    <form id="pledge-form">
-      <input type="email" name="email" required placeholder="your@email.com" class="bg-black border border-gray-700 rounded px-4 py-2 w-full text-sm mb-4">
-      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-      <button type="submit" class="btn-primary w-full">Reserve My Tier</button>
-      <div class="text-xs text-gray-600 mt-3 text-center">By reserving, you agree to receive launch updates. Unsubscribe anytime.</div>
-      <div id="pledge-status" class="text-xs mt-3"></div>
-    </form>
+    <div id="pledge-modal-body">
+      <div class="text-xs accent font-bold uppercase tracking-widest mb-2">Pre-Launch Registration</div>
+      <h3 class="text-2xl font-black mb-2" style="color:#f4ead5;">Reserve Your Tier</h3>
+      <p class="text-sm text-gray-400 mb-4">You chose: <span id="pledge-modal-tier" style="color:#c1272d;font-weight:900;"></span></p>
+      <p class="text-xs text-gray-500 mb-5">The Kickstarter is not live yet. Enter your email and we will send you the pledge link the moment the campaign opens. Your tier selection is noted.</p>
+      <form id="pledge-form">
+        <input type="email" name="email" required placeholder="your@email.com" class="bg-black border border-gray-700 rounded px-4 py-2 w-full text-sm mb-4">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <button type="submit" class="btn-primary w-full">Reserve My Tier</button>
+        <div class="text-xs text-gray-600 mt-3 text-center">By reserving, you agree to receive launch updates. Unsubscribe anytime.</div>
+        <div id="pledge-status" class="text-xs mt-3"></div>
+      </form>
+    </div>
+    <div id="pledge-modal-success" style="display:none;text-align:center;padding:8px 0;">
+      <div class="text-5xl mb-4" style="color:#c1272d;">✓</div>
+      <h3 class="text-2xl font-black mb-3" style="color:#f4ead5;">Tier Reserved</h3>
+      <p class="text-sm text-gray-300 mb-2">Your selection of <span id="pledge-success-tier" style="color:#c1272d;font-weight:900;"></span> has been noted.</p>
+      <p class="text-sm text-gray-400 mb-6">The Kickstarter pledge link will arrive in your inbox the moment the campaign opens.</p>
+      <button id="pledge-success-close" class="btn-primary w-full">Close</button>
+    </div>
   </div>
 </div>
 
@@ -901,21 +910,38 @@ button.listen()</pre>
     const modal = document.getElementById('pledge-modal');
     const modalClose = document.getElementById('pledge-modal-close');
     const modalTier = document.getElementById('pledge-modal-tier');
+    const modalBody = document.getElementById('pledge-modal-body');
+    const modalSuccess = document.getElementById('pledge-modal-success');
+    const modalSuccessTier = document.getElementById('pledge-success-tier');
+    const modalSuccessClose = document.getElementById('pledge-success-close');
     const pledgeForm = document.getElementById('pledge-form');
     const pledgeStatus = document.getElementById('pledge-status');
     let currentTier = '';
+    let autoCloseTimer = null;
 
     function openModal(tier) {
       currentTier = tier;
       modalTier.textContent = tier;
+      if (modalBody) modalBody.style.display = 'block';
+      if (modalSuccess) modalSuccess.style.display = 'none';
       if (pledgeStatus) pledgeStatus.textContent = '';
       pledgeForm.querySelector('input[name="email"]').value = '';
       modal.style.display = 'flex';
       setTimeout(function () { pledgeForm.querySelector('input[name="email"]').focus(); }, 50);
     }
-    function closeModal() { modal.style.display = 'none'; }
+    function closeModal() {
+      modal.style.display = 'none';
+      if (autoCloseTimer) { clearTimeout(autoCloseTimer); autoCloseTimer = null; }
+    }
+    function showSuccess() {
+      if (modalSuccessTier) modalSuccessTier.textContent = currentTier;
+      if (modalBody) modalBody.style.display = 'none';
+      if (modalSuccess) modalSuccess.style.display = 'block';
+      autoCloseTimer = setTimeout(closeModal, 5000);
+    }
 
     if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modalSuccessClose) modalSuccessClose.addEventListener('click', closeModal);
     if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 
@@ -958,12 +984,7 @@ button.listen()</pre>
         try {
           const { ok, body } = await postSubscribe(data);
           if (ok) {
-            if (pledgeStatus) {
-              pledgeStatus.textContent = body.status === 'already_subscribed'
-                ? 'You are already on the list. Your tier has been noted.'
-                : 'Tier reserved. Kickstarter link on its way when the campaign opens.';
-              pledgeStatus.style.color = '#c1272d';
-            }
+            showSuccess();
           } else {
             if (pledgeStatus) { pledgeStatus.textContent = friendlyError(body.error); pledgeStatus.style.color = '#ef4444'; }
           }
